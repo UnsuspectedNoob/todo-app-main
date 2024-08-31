@@ -3,18 +3,20 @@ import { iconCheck, iconCross } from "../assets/images";
 import { AllTasksContext } from "../contexts/TasksProvider";
 import { TaskType } from "../types";
 
-function Task({ name, id, completed }: TaskType) {
-  const { setAllTasks } = useContext(AllTasksContext);
+interface Props {
+  task: TaskType;
+}
+
+function Task({ task }: Props) {
+  const { allTasks, setAllTasks } = useContext(AllTasksContext);
+  const { name, id, completed } = task;
 
   return (
-    <div
-      draggable="true"
-      className="flex items-center border-b border-b-neutral-500 cursor-grab active:cursor-grabbing"
-    >
+    <div className="flex items-center border-b border-b-neutral-500">
       <div
-        className={`flex items-center bg-white py-4 pr-[14px] pl-5 ${(() => {
-          id === 0 && "rounded-tl-md";
-        })()} text-gray-500 self-stretch`}
+        className={`flex items-center bg-white py-4 pr-[14px] pl-5 ${
+          allTasks[0].id === id ? "rounded-tl-md" : ""
+        } text-gray-500 self-stretch`}
       >
         <div
           className={`flex items-center justify-center border rounded-full w-5 h-5 ${
@@ -47,9 +49,9 @@ function Task({ name, id, completed }: TaskType) {
       </div>
 
       <div
-        className={`flex items-center bg-white pr-5 self-stretch ${(() => {
-          id === 0 && "rounded-tr-md";
-        })()}`}
+        className={`flex items-center bg-white pr-5 self-stretch ${
+          allTasks[0].id === id ? "rounded-tr-md" : ""
+        }`}
       >
         <img
           src={iconCross}

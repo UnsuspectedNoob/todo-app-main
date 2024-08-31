@@ -3,25 +3,29 @@ import { createContext } from "react";
 import { TaskType, View } from "../types";
 
 type TaskContextType = {
-  allTasks: TaskType[] | null;
-  setAllTasks: Dispatch<SetStateAction<TaskType[]>> | null;
+  allTasks: TaskType[];
+  setAllTasks: Dispatch<SetStateAction<TaskType[]>>;
   currentView: View;
-  setCurrentView: Dispatch<SetStateAction<View>> | null;
+  setCurrentView: Dispatch<SetStateAction<View>>;
   id: number;
-  setId: Dispatch<SetStateAction<number>> | null;
+  setId: Dispatch<SetStateAction<number>>;
 };
 
 export const AllTasksContext = createContext<TaskContextType>({
-  allTasks: null,
-  setAllTasks: null,
+  allTasks: [],
+  setAllTasks: () => {},
   currentView: "all",
-  setCurrentView: null,
+  setCurrentView: () => {},
   id: 0,
-  setId: null,
+  setId: () => {},
 });
 
 function TasksProvider({ children }: { children: ReactNode }) {
-  const [allTasks, setAllTasks] = useState<TaskType[]>([]);
+  const [allTasks, setAllTasks] = useState<TaskType[]>([
+    { completed: false, id: 1, name: "Empty Task" },
+    { completed: false, id: 2, name: "Non-empty Task" },
+    { completed: false, id: 3, name: "Learn HTML" },
+  ]);
   const [currentView, setCurrentView] = useState<View>("all");
   const [id, setId] = useState(0);
 

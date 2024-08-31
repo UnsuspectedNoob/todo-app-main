@@ -42,18 +42,22 @@ function App() {
               <div className="border rounded-full w-5 h-5" />
             </div>
             <input
-              onKeyDown={(e) => {
-                if (e.code === "Enter" && e.currentTarget.value !== "") {
+              onKeyDown={(event) => {
+                if (event.key === "Enter" && event.currentTarget.value !== "") {
                   setAllTasks &&
                     allTasks &&
                     setAllTasks([
                       ...allTasks,
-                      { name: e.currentTarget.value, completed: false, id: id },
+                      {
+                        name: event.currentTarget.value,
+                        completed: false,
+                        id: id,
+                      },
                     ]);
-                  console.log(e.currentTarget.value);
+                  console.log(event.currentTarget.value);
                   setId && setId((prev) => prev + 1);
-                  e.currentTarget.value = "";
-                  // e.currentTarget.blur();
+                  event.currentTarget.value = "";
+                  // event.currentTarget.blur();
                 }
               }}
               type="text"
