@@ -2,16 +2,18 @@ import { Dispatch, ReactNode, SetStateAction, useState } from "react";
 import { createContext } from "react";
 import { TaskType, View } from "../types";
 
-type TaskContextType = {
+export type SetState<T> = Dispatch<SetStateAction<T>>;
+
+type TaskContext = {
   allTasks: TaskType[];
-  setAllTasks: Dispatch<SetStateAction<TaskType[]>>;
+  setAllTasks: SetState<TaskType[]>;
   currentView: View;
-  setCurrentView: Dispatch<SetStateAction<View>>;
+  setCurrentView: SetState<View>;
   id: number;
-  setId: Dispatch<SetStateAction<number>>;
+  setId: SetState<number>;
 };
 
-export const AllTasksContext = createContext<TaskContextType>({
+export const AllTasksContext = createContext<TaskContext>({
   allTasks: [],
   setAllTasks: () => {},
   currentView: "all",
