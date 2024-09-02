@@ -1,15 +1,13 @@
-import { Dispatch, ReactNode, SetStateAction, useState } from "react";
+import { ReactNode, useState } from "react";
 import { createContext } from "react";
-import { TaskType, View } from "../types";
-
-export type SetState<T> = Dispatch<SetStateAction<T>>;
+import { SetState, TaskType, View } from "../types";
 
 type TaskContext = {
   allTasks: TaskType[];
   setAllTasks: SetState<TaskType[]>;
   currentView: View;
   setCurrentView: SetState<View>;
-  id: number;
+  id: number | string;
   setId: SetState<number>;
 };
 
@@ -23,13 +21,9 @@ export const AllTasksContext = createContext<TaskContext>({
 });
 
 function TasksProvider({ children }: { children: ReactNode }) {
-  const [allTasks, setAllTasks] = useState<TaskType[]>([
-    { completed: false, id: 1, name: "Empty Task" },
-    { completed: false, id: 2, name: "Non-empty Task" },
-    { completed: false, id: 3, name: "Learn HTML" },
-  ]);
+  const [allTasks, setAllTasks] = useState<TaskType[]>([]);
   const [currentView, setCurrentView] = useState<View>("all");
-  const [id, setId] = useState(0);
+  const [id, setId] = useState(1);
 
   return (
     <AllTasksContext.Provider

@@ -1,24 +1,36 @@
 import { useContext, useMemo } from "react";
 import { AllTasksContext } from "../contexts/TasksProvider";
 import Task from "./Task";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 
 function TaskList() {
   const { allTasks, setAllTasks, currentView } = useContext(AllTasksContext);
-  const displayTasks = useMemo(() => {
-    let displayTasks = allTasks;
-    if (currentView === "completed")
-      displayTasks = allTasks.filter((task) => task.completed);
-    else if (currentView === "active")
-      displayTasks = allTasks.filter((task) => !task.completed);
 
-    return displayTasks;
+  const displayTasks = useMemo(() => {
+    let tempArray = allTasks;
+    if (currentView === "completed")
+      tempArray = allTasks.filter((task) => task.completed);
+    else if (currentView === "active")
+      tempArray = allTasks.filter((task) => !task.completed);
+
+    return tempArray;
   }, [allTasks, currentView]);
+
+  const tasksId = useMemo(
+    () => displayTasks.map((task) => task.id),
+    [displayTasks]
+  );
 
   return (
     <div>
-      {displayTasks.map((task) => (
-        <Task task={task} key={task.id} />
-      ))}
+      <SortableContext items={tasksId} strategy={verticalListSortingStrategy}>
+        {displayTasks.map((task) => (
+          <Task task={task} key={task.id} />
+        ))}
+      </SortableContext>
 
       <div
         className={`flex justify-between bg-white p-[18px] rounded-b-md text-[12px] ${
