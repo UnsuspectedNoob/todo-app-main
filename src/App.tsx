@@ -1,5 +1,12 @@
 import { useContext, useState } from "react";
-import { desktopLight, iconMoon, mobileLight } from "./assets/images";
+import {
+  desktopDark,
+  desktopLight,
+  iconMoon,
+  iconSun,
+  mobileDark,
+  mobileLight,
+} from "./assets/images";
 import { AllTasksContext } from "./contexts/TasksProvider";
 import TaskList from "./components/TaskList";
 import ToggleView from "./components/ToggleView";
@@ -24,6 +31,7 @@ import Task from "./components/Task";
 function App() {
   const { allTasks, setAllTasks, id, setId } = useContext(AllTasksContext);
 
+  const [light, setLight] = useState(true); // light and dark themes
   const [activeTask, setActiveTask] = useState<TaskType | null>(null);
 
   const sensors = useSensors(
@@ -35,39 +43,66 @@ function App() {
   );
 
   return (
-    <div className="bg-neutral-100 border-t w-screen min-h-screen font-josefin">
+    <div
+      className={`bg-dark-body border-t w-screen min-h-screen font-josefin ${
+        light ? "theme-light" : "theme-dark"
+      }`}
+    >
       {/* Absolute Image Header */}
-      <img
-        src={mobileLight}
-        alt="header image"
-        className="z-10 absolute md:hidden w-full max-h-[270px] object-cover"
-      />
-      <img
-        src={desktopLight}
-        alt="header image"
-        className="md:block z-10 absolute hidden w-full max-h-[270px] object-cover"
-      />
+      {light ? (
+        <>
+          <img
+            src={mobileLight}
+            alt="header image"
+            className="z-10 absolute md:hidden w-full max-h-[270px] md:max-h-[300px] object-cover"
+          />
+          <img
+            src={desktopLight}
+            alt="header image"
+            className="md:block z-10 absolute hidden w-full max-h-[270px] md:max-h-[300px] object-cover"
+          />
+        </>
+      ) : (
+        <>
+          <img
+            src={mobileDark}
+            alt="header image"
+            className="z-10 absolute md:hidden w-full max-h-[270px] md:max-h-[300px] object-cover"
+          />
+          <img
+            src={desktopDark}
+            alt="header image"
+            className="md:block z-10 absolute hidden w-full max-h-[270px] md:max-h-[300px] object-cover"
+          />
+        </>
+      )}
 
       {/* Main Body */}
-      <div className="relative z-20 px-6 pt-12">
+      <div className="relative z-20 mx-auto px-6 md:px-0 pt-12 md:pt-20 max-w-[540px]">
         {/* Header */}
         <div className="flex justify-between">
           <a
             href="#"
-            className="font-bold text-[27px] text-white leading-none tracking-[10px]"
+            className="font-bold text-[27px] text-white md:text-[40px] leading-none tracking-[10px] md:tracking-[14px]"
           >
             TODO
           </a>
-          <div>
-            <img src={iconMoon} alt="Theme Switcher" className="w-5 h-5" />
+
+          {/* Theme Switcher */}
+          <div className="hover:cursor-pointer" onClick={toggleTheme}>
+            <img
+              src={light ? iconMoon : iconSun}
+              alt="Theme Switcher"
+              className="w-5 md:w-[26px] h-5 md:h-[26px]"
+            />
           </div>
         </div>
 
         <div className="space-y-4 mt-8">
           {/* Input Task */}
           <div className="flex items-center rounded-md">
-            <div className="flex items-center bg-white py-[14px] pr-[14px] pl-5 rounded-l-md text-gray-500 self-stretch">
-              <div className="border rounded-full w-5 h-5" />
+            <div className="flex items-center bg-light-body py-[14px] pr-[14px] pl-5 rounded-l-md text-gray-500 self-stretch">
+              <div className="border-circle-color border rounded-full w-5 h-5" />
             </div>
             <input
               onKeyDown={(event) => {
@@ -87,7 +122,7 @@ function App() {
               }}
               type="text"
               placeholder="Create a new todo..."
-              className="flex-1 bg-white border-none rounded-r-md focus:ring-0 text-gray-700 focus:outline-none text-xs self-stretch"
+              className="flex-1 bg-light-body border-none rounded-r-md focus:ring-0 text-main text-xs placeholder:text-off focus:outline-none self-stretch"
             />
           </div>
 
@@ -102,7 +137,7 @@ function App() {
 
             {createPortal(
               <DragOverlay>
-                {activeTask && <Task task={activeTask} />}
+                {activeTask && <Task task={activeTask} display={[]} />}
               </DragOverlay>,
               document.body
             )}
@@ -112,7 +147,7 @@ function App() {
         </div>
       </div>
 
-      <p className="mt-11 text-[14px] text-center">
+      <p className="mt-11 text-[14px] text-center text-off">
         Drag and drop to reorder list
       </p>
     </div>
@@ -145,6 +180,10 @@ function App() {
 
   function getIndex(array: TaskType[], id: UniqueIdentifier) {
     return array.findIndex((task) => task.id === id);
+  }
+
+  function toggleTheme() {
+    setLight((prev) => !prev);
   }
 }
 

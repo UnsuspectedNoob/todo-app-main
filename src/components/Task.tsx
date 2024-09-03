@@ -7,10 +7,11 @@ import { CSS } from "@dnd-kit/utilities";
 
 interface Props {
   task: TaskType;
+  display: TaskType[];
 }
 
-function Task({ task }: Props) {
-  const { allTasks, setAllTasks } = useContext(AllTasksContext);
+function Task({ task, display }: Props) {
+  const { setAllTasks } = useContext(AllTasksContext);
   const { name, id, completed } = task;
 
   const {
@@ -85,15 +86,15 @@ function Task({ task }: Props) {
     <div
       ref={setNodeRef}
       style={style}
-      className="flex items-center border-b border-b-neutral-500 touch-none"
+      className="flex items-center border-b border-b-circle-color touch-none"
     >
       <div
         className={`${
-          allTasks[0].id === id ? "rounded-tl-md " : ""
-        }flex items-center bg-white py-4 pr-[14px] pl-5 text-gray-500 self-stretch`}
+          display[0]?.id === id ? "rounded-tl-md " : ""
+        }flex items-center py-4 pr-[14px] pl-5 text-gray-500 self-stretch bg-light-body `}
       >
         <div
-          className={`cursor-pointer flex items-center justify-center border rounded-full w-5 h-5 ${
+          className={`cursor-pointer flex items-center justify-center border border-circle-color rounded-full w-5 h-5 ${
             completed && "bg-gradient-to-b from-[#57ddff] to-[#c058f3]"
           }`}
           onClick={() => {
@@ -112,11 +113,11 @@ function Task({ task }: Props) {
       <div
         {...attributes}
         {...listeners}
-        className={`flex flex-1 items-center bg-white border-none self-stretch cursor-move`}
+        className={`bg-light-body flex flex-1 items-center border-none self-stretch cursor-move`}
       >
         <p
-          className={`text-[12px] text-gray-700 ${
-            completed && "line-through text-gray-300"
+          className={`text-[12px] text-main ${
+            completed && "line-through text-strike"
           }`}
         >
           {name}
@@ -125,8 +126,8 @@ function Task({ task }: Props) {
 
       <div
         className={`${
-          allTasks[0].id === id ? "rounded-tr-md " : ""
-        }cursor-pointer flex items-center bg-white pr-5 self-stretch`}
+          display[0]?.id === id ? "rounded-tr-md " : ""
+        }cursor-pointer flex items-center bg-light-body  pr-5 self-stretch`}
       >
         <img
           src={iconCross}

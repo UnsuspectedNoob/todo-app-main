@@ -28,16 +28,16 @@ function TaskList() {
     <div>
       <SortableContext items={tasksId} strategy={verticalListSortingStrategy}>
         {displayTasks.map((task) => (
-          <Task task={task} key={task.id} />
+          <Task task={task} key={task.id} display={displayTasks} />
         ))}
       </SortableContext>
 
       <div
-        className={`flex justify-between bg-white p-[18px] rounded-b-md text-[12px] ${
+        className={`flex justify-between bg-light-body p-[18px] rounded-b-md text-[12px] ${
           displayTasks.length === 0 ? "rounded-t-md" : ""
         }`}
       >
-        <p>
+        <p className="text-off">
           {(() => {
             let number = allTasks.filter((task) => !task.completed).length;
 
@@ -50,6 +50,7 @@ function TaskList() {
             setAllTasks &&
               setAllTasks((prev) => prev.filter((task) => !task.completed));
           }}
+          className="text-off cursor-pointer"
         >
           Clear Completed
         </p>
