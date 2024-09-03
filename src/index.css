@@ -47,3 +47,24 @@
   font-weight: 700;
   src: url("./assets/fonts/josefin-sans-v32-latin-700.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
+
+.border-gradient {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-width: 1px;
+  border-radius: 50%;
+}
+/* order-gradient cursor-pointer flex items-center justify-center border border-circle-color rounded-full w-5 md:w-6 h-5 md:h-6  */
+
+.border-gradient:hover {
+  border-color: transparent;
+  background-image: linear-gradient(
+      hsla(var(--light-background)),
+      hsla(var(--light-background))
+    ),
+    linear-gradient(#57ddff, #c058f3);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}

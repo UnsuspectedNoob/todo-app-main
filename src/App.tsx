@@ -44,7 +44,7 @@ function App() {
 
   return (
     <div
-      className={`bg-dark-body border-t w-screen min-h-screen font-josefin ${
+      className={`overflow-hidden bg-dark-body border-t w-screen min-h-screen font-josefin ${
         light ? "theme-light" : "theme-dark"
       }`}
     >
@@ -100,9 +100,9 @@ function App() {
 
         <div className="space-y-4 mt-8">
           {/* Input Task */}
-          <div className="flex items-center rounded-md">
-            <div className="flex items-center bg-light-body py-[14px] pr-[14px] pl-5 rounded-l-md text-gray-500 self-stretch">
-              <div className="border-circle-color border rounded-full w-5 h-5" />
+          <div className="flex items-center bg-light-body rounded-md">
+            <div className="flex items-center bg-light-body py-[14px] pr-[14px] md:pr-5 pl-5 rounded-l-md text-gray-500 self-stretch">
+              <div className="border-circle-color border rounded-full w-5 md:w-6 h-5 md:h-6" />
             </div>
             <input
               onKeyDown={(event) => {
@@ -122,7 +122,7 @@ function App() {
               }}
               type="text"
               placeholder="Create a new todo..."
-              className="flex-1 bg-light-body border-none rounded-r-md focus:ring-0 text-main text-xs placeholder:text-off focus:outline-none self-stretch"
+              className="flex-1 bg-light-body border-none focus:ring-0 text-[12px] text-main md:text-[18px] placeholder:text-off focus:outline-none"
             />
           </div>
 

@@ -1,10 +1,11 @@
-import { useContext, useMemo } from "react";
-import { AllTasksContext } from "../contexts/TasksProvider";
-import Task from "./Task";
 import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import { useContext, useMemo } from "react";
+import { AllTasksContext } from "../contexts/TasksProvider";
+import Task from "./Task";
+import ViewButtons from "./ViewButtons";
 
 function TaskList() {
   const { allTasks, setAllTasks, currentView } = useContext(AllTasksContext);
@@ -37,7 +38,7 @@ function TaskList() {
           displayTasks.length === 0 ? "rounded-t-md" : ""
         }`}
       >
-        <p className="text-off">
+        <p className="text-off md:text-[14px]">
           {(() => {
             let number = allTasks.filter((task) => !task.completed).length;
 
@@ -45,12 +46,16 @@ function TaskList() {
           })()}
         </p>
 
+        <div className="md:block hidden">
+          <ViewButtons />
+        </div>
+
         <p
           onClick={() => {
             setAllTasks &&
               setAllTasks((prev) => prev.filter((task) => !task.completed));
           }}
-          className="text-off cursor-pointer"
+          className="text-off md:text-[14px] hover:text-main cursor-pointer"
         >
           Clear Completed
         </p>
