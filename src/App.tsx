@@ -1,15 +1,3 @@
-import { useContext, useState } from "react";
-import {
-  desktopDark,
-  desktopLight,
-  iconMoon,
-  iconSun,
-  mobileDark,
-  mobileLight,
-} from "./assets/images";
-import { AllTasksContext } from "./contexts/TasksProvider";
-import TaskList from "./components/TaskList";
-import ToggleView from "./components/ToggleView";
 import {
   closestCorners,
   DndContext,
@@ -24,9 +12,21 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
-import { TaskType } from "./types";
+import { useContext, useState } from "react";
 import { createPortal } from "react-dom";
+import {
+  desktopDark,
+  desktopLight,
+  iconMoon,
+  iconSun,
+  mobileDark,
+  mobileLight,
+} from "./assets/images";
 import Task from "./components/Task";
+import TaskList from "./components/TaskList";
+import ToggleView from "./components/ToggleView";
+import { AllTasksContext } from "./contexts/TasksProvider";
+import { TaskType } from "./types";
 
 function App() {
   const { allTasks, setAllTasks, id, setId } = useContext(AllTasksContext);
@@ -44,7 +44,7 @@ function App() {
 
   return (
     <div
-      className={`overflow-hidden bg-dark-body border-t w-screen min-h-screen font-josefin ${
+      className={`bg-dark-body border-t min-h-screen font-josefin ${
         light ? "theme-light" : "theme-dark"
       }`}
     >
