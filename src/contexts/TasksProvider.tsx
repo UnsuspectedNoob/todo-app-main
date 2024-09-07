@@ -29,8 +29,6 @@ function TasksProvider({ children }: { children: ReactNode }) {
   const [currentView, setCurrentView] = useState<View>("all");
   const [id, setId] = useState(1);
 
-  useEffect(() => {}, []); // just on the first render.
-
   useEffect(
     () => localStorage.setItem("tasks", JSON.stringify(allTasks)),
     [allTasks]
